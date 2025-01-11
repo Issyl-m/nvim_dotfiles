@@ -1,0 +1,131 @@
+extends cpp
+
+snippet cph "cudaMemcpy" iA 
+cudaMemcpy(${1:void* dst_host}, ${2:const void* src_device}, ${3:size_t buff_size}, ${4:cudaMemcpyDeviceToHost});$0
+endsnippet
+
+snippet cpd "cudaMemcpy" iA 
+cudaMemcpy(${1:void* dst_device}, ${2:const void* src_host}, ${3:size_t buff_size}, ${4:cudaMemcpyHostToDevice});$0
+endsnippet
+
+snippet cff "cudaFree" iA
+cudaFree(${0:void* DevPtr});
+endsnippet
+
+snippet cma "cudaMalloc" iA
+int *lpDeviceBuffer_1;
+cudaMalloc(&lpDeviceBuffer_1, cbBufferSize_1);
+endsnippet
+
+snippet genn "generate()" iA
+generate(host_a.begin(), host_a.end(), []() { return rand() % 100; });
+endsnippet
+
+snippet kkk "new kernel" iA
+${1:kernel_name} <<< num_blocks, num_threads >>> (${2:device_A}, ${3:device_B}, ${5:device_C});$0
+endsnippet
+
+snippet kkks "new kernel w/ stream" iA
+${1:kernel_name} <<< num_blocks, num_threads, 0, stream_1 >>> (${2:device_A}, ${3:device_B}, ${5:device_C});$0
+endsnippet
+
+snippet ccc "const" iA
+const $0
+endsnippet
+
+snippet incc "cuda headers" iA
+#include <cuda_runtime.h>
+#include <device_launch_parameters.h>
+endsnippet
+
+snippet ggg "__global__" iA
+__global__ void ${1:routine}(${2:int *param_1}) {
+  int x = blockIdx.x * blockDim.x + threadIdx.x;
+  int y = blockIdx.y * blockDim.y + threadIdx.y;
+
+	$0
+}
+endsnippet
+
+snippet aaa "__align__(16)" iA
+__align__(16) $0
+endsnippet
+
+snippet rrr "*__restrict__" iA
+*__restrict__ $0
+endsnippet
+
+snippet hhh "__host__" iA
+__host__ $0
+endsnippet
+
+snippet ddd "__device__" iA
+__device__ $0
+endsnippet
+
+snippet sss "shared" iA
+__shared__ int s_a[SHMEM_SIZE];
+endsnippet
+
+snippet stt "__syncthreads" iA
+__syncthreads();$0
+endsnippet
+
+snippet cds "cudaDeviceSynchronize"
+cudaDeviceSynchronize();$0
+endsnippet
+
+snippet fff "void routine" iA
+void ${1:routine}(${2:int *param_1}) {
+	$0
+
+	return;
+}
+endsnippet
+
+snippet eee "row + cols" iA
+[curr_row * n_cols + curr_col]$0
+endsnippet
+
+snippet dbgg "cheap dbg" iA
+// START REMOVE //
+Ncolumns = ...
+Nrows = ...
+foobaz = ...
+for (int iii = 0; iii < Ncolumns; iii++) {
+    for (int jjj = 0; jjj < Nrows; jjj++) {
+        printf("%d ", foobaz[jjj*Ncolumns + iii]);
+    }
+    printf("\n");
+} 
+printf("--\n");
+// END REMOVE //
+endsnippet
+
+snippet pmm "print matrix" iA
+void print_matrix(vector<int> &a){
+  for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+          printf("%d ", a[i, j]);
+      }
+      printf("\n");
+  } 
+  printf("--\n");
+}
+endsnippet
+
+snippet ppp "printf" iA
+printf("AAAAAAAAAAA: %d %d %d %d \n\n", param_1, param_2, param_3, param_4);
+endsnippet
+
+snippet csc "cudaStreamCreate" iA
+cudaStream_t stream_1;
+cudaStreamCreate(&stream_1);
+endsnippet
+
+	# // Threads per CTA dimension
+  # int THREADS = 32;
+  # int BLOCKS = N / THREADS; // even div
+  
+  # dim3 threads(THREADS, THREADS);
+  # dim3 blocks(BLOCKS, BLOCKS);
