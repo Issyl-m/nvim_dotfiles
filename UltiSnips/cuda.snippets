@@ -122,10 +122,3 @@ snippet csc "cudaStreamCreate" iA
 cudaStream_t stream_1;
 cudaStreamCreate(&stream_1);
 endsnippet
-
-	# // Threads per CTA dimension
-  # int THREADS = 32;
-  # int BLOCKS = N / THREADS; // even div
-  
-  # dim3 threads(THREADS, THREADS);
-  # dim3 blocks(BLOCKS, BLOCKS);
